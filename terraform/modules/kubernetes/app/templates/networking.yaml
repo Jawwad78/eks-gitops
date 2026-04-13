@@ -4,18 +4,17 @@ metadata:
   name: minimal-ingress
   annotations:
     # <1>
-    kubernetes.io/spec.ingressClassName: traefik
+    kubernetes.io/spec.ingressClassName: traefik #using traefik contoller
 spec:
   rules:
-  - host: jawwad-app.jawwad.org
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: jawwad-service
-            port:
-              number: 80
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: jawwad-service
+                port:
+                  number: 80
 
 
