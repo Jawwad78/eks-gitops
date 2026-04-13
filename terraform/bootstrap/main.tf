@@ -14,3 +14,7 @@ module "ecr" {
 module "route53" {
   source = "./modules/route53"
 }
+
+module "oidc" {
+  source = "./modules/oidc"
+}
