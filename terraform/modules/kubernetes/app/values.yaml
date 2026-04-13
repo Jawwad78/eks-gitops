@@ -1,0 +1,13 @@
+app:
+  name: jawwad-app
+
+service:
+  name: jawwad-service
+
+port:
+  port: 80
+  containerPort: 80
+  targetPort: 80
+
+container:
+  image: "726661503364.dkr.ecr.eu-west-2.amazonaws.com/eks:latest"

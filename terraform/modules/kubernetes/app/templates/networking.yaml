@@ -13,8 +13,8 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: jawwad-service
+                name: {{ .Values.service.name }}
                 port:
-                  number: 80
+                  number: {{ .Values.port.port }}
 
 

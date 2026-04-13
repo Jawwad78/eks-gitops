@@ -3,19 +3,19 @@ kind: Deployment
 metadata:
   name: app-deployment
   labels:
-    app: jawwad-app
+    app: {{ .Values.app.name }}
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: jawwad-app
+      app: {{ .Values.app.name }}
   template:
     metadata:
       labels: 
-        app: jawwad-app
+        app: {{ .Values.app.name }}
     spec:
       containers:
-      - name:  jawwad-app
-        image: "726661503364.dkr.ecr.eu-west-2.amazonaws.com/eks:latest"
+      - name:  {{ .Values.app.name }}
+        image: {{ .Values.container.image }}
         ports:
-        - containerPort: 80
+        - containerPort: {{ .Values.port.containerPort }}
