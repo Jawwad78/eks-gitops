@@ -1,0 +1,18 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    email: ja66730@gmail.com
+    server:  https://acme-v02.api.letsencrypt.org/directory # you can change this to whoevers acm issuer api provider you want! 
+    privateKeySecretRef:
+      name: letsencrypt-secret
+    solvers:
+      - selector:
+          dnsZones:
+            - jawwad.org
+        dns01:
+          route53:
+            region: eu-west-2
+            hostedZoneID: Z02961562YZEMBNSY5HGH
