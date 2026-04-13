@@ -10,3 +10,7 @@ module "dynamodb" {
 module "ecr" {
   source = "./modules/ecr"
 }
+
+module "route53" {
+  source = "./modules/route53"
+}

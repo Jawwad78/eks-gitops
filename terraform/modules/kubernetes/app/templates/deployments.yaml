@@ -19,3 +19,44 @@ spec:
         image: {{ .Values.container.image }}
         ports:
         - containerPort: {{ .Values.port.containerPort }}
+
+# adding service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.name }}
+spec:
+  selector:
+    app: {{ .Values.app.name }}
+  ports:
+    - name: http
+      port: {{ .Values.port.port }}
+      targetPort: {{ .Values.port.targetPort }}
+      
+
+# add ingress
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minimal-ingress
+  annotations:
+    # <1>
+    kubernetes.io/spec.ingressClassName: traefik #using traefik contoller
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.service.name }}
+                port:
+                  number: {{ .Values.port.port }}
+  tls:
+    - hosts:
+        - app.jawwad.org.com  
+      secretName:  cert-letsencrypt-secret  
+
