@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    app: jawwad-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: jawwad-app
+  template:
+    metadata:
+      labels: 
+        app: jawwad-app
+    spec:
+      containers:
+      - name:  jawwad-app
+        image: "726661503364.dkr.ecr.eu-west-2.amazonaws.com/eks:latest"
+        ports:
+        - containerPort: 80

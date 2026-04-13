@@ -1,0 +1,36 @@
+let me recap what I have done so far so 
+
+vpc created
+2 public and private subnets done 
+1 igw and route table pointing to the igw 
+
+I have also created bootstrap for 
+
+ok so now continue fron nat 
+
+most aws resources are done 
+
+I have nlb left
+
+but now what is the next step from here?
+
+so teraform will create the infra needed like cluster vpc etc
+BUT helm charts,you will use to apply all kubernets manifest files at once
+
+nginx ingress controller and other yaml files
+
+
+what is argocd? - done
+what is externaldns?- done 
+what is cert manager for ssl cert- done
+what is grafan
+what is prometheus
+what is gitops and is it different to argocd? -done
+
+keep in mind: github actions creatres infra + image
+argocd sees 
+
+how argocd will work across differnet pods
+why do some poeple have kubernets module and then yaml files and also helm moduke and files
+
+after project finished - do A LOT OF RESERCH ON BUSINESS IMPACT 

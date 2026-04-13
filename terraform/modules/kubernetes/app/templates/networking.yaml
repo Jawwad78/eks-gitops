@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minimal-ingress
+  annotations:
+    # <1>
+    kubernetes.io/spec.ingressClassName: traefik
+spec:
+  rules:
+  - host: jawwad-app.jawwad.org
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: jawwad-service
+            port:
+              number: 80
+
+

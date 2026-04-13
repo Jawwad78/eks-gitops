@@ -7,10 +7,11 @@ resource "aws_vpc" "eks" {
 }
 
 resource "aws_subnet" "public" {
-  count = length(var.availability_zones)
-  vpc_id     = aws_vpc.eks.id
-  cidr_block = "10.0.${count.index + 1}.0/26"
+  count             = length(var.availability_zones)
+  vpc_id            = aws_vpc.eks.id
+  cidr_block        = "10.0.${count.index + 1}.0/26"
   availability_zone = var.availability_zones[count.index]
+
 
   tags = {
     Name = "public-subnet-${count.index + 1}"
@@ -18,10 +19,11 @@ resource "aws_subnet" "public" {
 }
 
 resource "aws_subnet" "private" {
-  count = length(var.availability_zones)
-  vpc_id     = aws_vpc.eks.id
-  cidr_block = "10.0.${count.index + 3}.0/26"
+  count             = length(var.availability_zones)
+  vpc_id            = aws_vpc.eks.id
+  cidr_block        = "10.0.${count.index + 3}.0/26"
   availability_zone = var.availability_zones[count.index]
+  map_public_ip_on_launch = false
 
   tags = {
     Name = "private-subnet-${count.index + 1}"
@@ -50,14 +52,14 @@ resource "aws_route_table" "igw" {
 }
 
 resource "aws_route_table_association" "a" {
-  count = length(aws_subnet.public)
+  count          = length(aws_subnet.public)
   subnet_id      = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.igw.id
 }
 
 
 resource "aws_eip" "lb" {
-  domain   = "vpc"
+  domain = "vpc"
 }
 
 # Using regional NAT to span across both AZ's!
@@ -82,7 +84,7 @@ resource "aws_route_table" "nat" {
 }
 
 resource "aws_route_table_association" "b" {
-  count = length(aws_subnet.private)
+  count          = length(aws_subnet.private)
   subnet_id      = aws_subnet.private[count.index].id
   route_table_id = aws_route_table.nat.id
 }
