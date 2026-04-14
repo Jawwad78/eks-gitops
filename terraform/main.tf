@@ -26,6 +26,4 @@ module "kubernetes" {
   source = "./modules/kubernetes"
 }
 
-module "route53" {
-  source = "./modules/route53"
-}
+
