@@ -3,10 +3,11 @@ kind: Certificate
 metadata:
   name: cert-letsencrypt
   namespace: cert-manager
+  
 spec:
   secretName: cert-letsencrypt-secret # where your certificate will be stored once retrieved from let's encrypt
   dnsNames:
-    - jawwad.org
+    - app.jawwad.org
   issuerRef:
     name: letsencrypt-staging
     kind: ClusterIssuer

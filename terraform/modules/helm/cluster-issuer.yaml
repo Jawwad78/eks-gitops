@@ -14,5 +14,4 @@ spec:
             - jawwad.org
         dns01:
           route53:
-            region: eu-west-2
             hostedZoneID: Z02961562YZEMBNSY5HGH

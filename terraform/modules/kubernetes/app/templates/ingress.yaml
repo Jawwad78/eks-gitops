@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minimal-ingress
+  namespace: cert-manager
+  annotations:
+    # <1>
+    kubernetes.io/spec.ingressClassName: traefik #using traefik contoller
+spec:
+  rules:
+  - host: app.jawwad.org
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+             name: {{ .Values.service.name }}
+             port:
+               number: {{ .Values.port.port }}
+  tls:
+  - hosts:
+    - app.jawwad.org  
+    secretName:  cert-letsencrypt-secret  
