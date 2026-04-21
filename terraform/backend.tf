@@ -3,7 +3,6 @@ terraform {
     bucket         = "ekstfstate786"
     key            = "path/to/my/key"
     region         = "eu-west-2"
-    dynamodb_table = "eksstatelock"
-
+    use_lockfile = true
   }
 }
