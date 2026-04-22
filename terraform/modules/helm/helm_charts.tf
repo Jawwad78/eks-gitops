@@ -23,3 +23,19 @@ resource "helm_release" "cert-manager" {
 
   depends_on = [var.node_group_name]
 }
+
+resource "helm_release" "traefik" {
+  name = "traefik"
+
+  repository       = "https://traefik.github.io/charts"
+  chart            = "traefik"
+  namespace        = "traefik"
+  create_namespace = true
+
+
+  values = [
+    file("${path.module}/traefik-values.yaml")
+  ]
+
+   depends_on = [var.node_group_name]
+}
