@@ -39,3 +39,10 @@ resource "helm_release" "traefik" {
 
    depends_on = [var.node_group_name]
 }
+
+resource "helm_release" "app" {
+  name      = "deploy"
+  chart     = "./modules/kubernetes/app"
+
+   depends_on = [var.node_group_name]
+}
