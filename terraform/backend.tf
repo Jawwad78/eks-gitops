@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
-    bucket         = "ekstfstate786"
-    key            = "path/to/my/key"
-    region         = "eu-west-2"
+    bucket       = "ekstfstate786"
+    key          = "path/to/my/key"
+    region       = "eu-west-2"
     use_lockfile = true
   }
 }

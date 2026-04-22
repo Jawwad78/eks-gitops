@@ -7,8 +7,8 @@ variable "aws_security_group_private" {
 }
 
 variable "aws_iam_role_node" {
-    type = string
-  
+  type = string
+
 }
 
 variable "principal_arn" {

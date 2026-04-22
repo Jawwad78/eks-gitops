@@ -31,6 +31,6 @@ module "irsa" {
 }
 
 module "helm" {
-  source = "./modules/helm"
+  source          = "./modules/helm"
   node_group_name = module.eks.node_group_name
 }

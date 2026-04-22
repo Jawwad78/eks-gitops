@@ -9,8 +9,8 @@ resource "aws_eks_cluster" "example" {
   version  = "1.35"
 
   vpc_config {
-    subnet_ids = var.aws_subnet_private
-    security_group_ids =   [var.aws_security_group_private]
+    subnet_ids         = var.aws_subnet_private
+    security_group_ids = [var.aws_security_group_private]
   }
 
   # Ensure that IAM Role permissions are created before and deleted
@@ -45,7 +45,7 @@ resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSClusterPolicy" {
   role       = aws_iam_role.cluster.name
 }
 
- #create access entry so I can acces the cluster from laptop
+#create access entry so I can acces the cluster from laptop
 resource "aws_eks_access_entry" "example" {
   cluster_name      = aws_eks_cluster.example.name
   principal_arn     = var.principal_arn
@@ -60,7 +60,7 @@ resource "aws_eks_access_policy_association" "example" {
   principal_arn = var.principal_arn
 
   access_scope {
-    type       = "cluster"
+    type = "cluster"
   }
 }
 
@@ -70,7 +70,7 @@ resource "aws_eks_access_policy_association" "example2" {
   principal_arn = var.principal_arn
 
   access_scope {
-    type       = "cluster"
+    type = "cluster"
   }
 }
 
@@ -87,7 +87,7 @@ resource "aws_eks_node_group" "example" {
     max_size     = var.max_size
     min_size     = var.min_size
   }
-  
+
   #how many nodes can be updated at the same time
   update_config {
     max_unavailable = var.max_unavailable
@@ -96,5 +96,5 @@ resource "aws_eks_node_group" "example" {
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
   # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
   depends_on = [var.aws_iam_role_node]
-  
+
 }
