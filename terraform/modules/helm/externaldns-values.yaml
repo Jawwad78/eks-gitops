@@ -1,6 +1,6 @@
 serviceAccount:
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::726661503364:role/irsa
+    eks.amazonaws.com/role-arn: arn:aws:iam::726661503364:role/external-dns
 provider:
   name: aws
 env:
