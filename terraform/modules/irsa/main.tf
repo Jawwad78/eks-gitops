@@ -16,10 +16,11 @@ resource "aws_iam_policy" "policy_for_svcaccount" {
           "route53:ListResourceRecordSets"
         ],
         "Resource" : "arn:aws:route53:::hostedzone/Z02961562YZEMBNSY5HGH", # You can change this to YOUR specific hosted zone,
-        "Condition" : {
-          "ForAllValues:StringEquals" : {
-            "route53:ChangeResourceRecordSetsRecordTypes" : ["TXT"]
-          }
+        "Condition": {
+        "ForAllValues:StringLike": {
+          "route53:ChangeResourceRecordSetsActions": ["CREATE", "UPSERT", "DELETE"],
+          "route53:ChangeResourceRecordSetsRecordTypes": ["A", "AAAA", "CNAME", "MX", "TXT"]
+        }
         }
       },
       {

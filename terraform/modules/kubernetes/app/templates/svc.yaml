@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name: {{ .Values.service.name }}
   namespace: cert-manager
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: app.jawwad.org
 spec:
   selector:
     app: {{ .Values.app.name }}
