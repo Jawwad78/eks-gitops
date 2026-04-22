@@ -46,3 +46,17 @@ resource "helm_release" "app" {
 
    depends_on = [var.node_group_name]
 }
+
+resource "helm_release" "external-dns" {
+  name = "external-dns"
+
+  repository       = "https://kubernetes-sigs.github.io/external-dns"
+  chart            = "external-dns"
+  
+
+  values = [
+    file("${path.module}/externaldns-values.yaml")
+  ]
+
+   depends_on = [var.node_group_name]
+}
