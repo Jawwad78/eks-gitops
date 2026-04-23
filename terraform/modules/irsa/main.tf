@@ -114,3 +114,27 @@ resource "aws_iam_role_policy_attachment" "externaldns-attacth" {
   role       = aws_iam_role.external-dns.name
   policy_arn = aws_iam_policy.policy_for_external_dns.arn
 } 
+
+# Creating irsa for prometheus=  ebs storage
+resource "aws_iam_role" "prometheusirsa" {
+  name = "prometheusirsa"
+
+  assume_role_policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Action" : "sts:AssumeRoleWithWebIdentity",
+        "Principal" : {
+          "Federated" : "arn:aws:iam::726661503364:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/4197F45D6D65EC166B272BDC4FF9B6F5"
+        },
+        "Condition" : {
+          "StringEquals" : {
+            "oidc.eks.eu-west-2.amazonaws.com/id/4197F45D6D65EC166B272BDC4FF9B6F5:aud": "sts.amazonaws.com",
+                    "oidc.eks.eu-west-2.amazonaws.com/id/4197F45D6D65EC166B272BDC4FF9B6F5:sub": "system:serviceaccount:kube-system:ebs-csi-controller-sa"
+          }
+        }
+      }
+    ]
+  })
+}

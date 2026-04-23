@@ -34,3 +34,7 @@ variable "max_unavailable" {
 variable "authentication_mode" {
   type = string
 }
+
+variable "prometheusirsa" {
+  type = string
+}

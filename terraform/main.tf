@@ -16,6 +16,8 @@ module "eks" {
   max_size                   = var.max_size
   max_unavailable            = var.max_unavailable
   authentication_mode        = var.authentication_mode
+  prometheusirsa = module.irsa.prometheusirsa
+
 }
 
 module "iam" {
