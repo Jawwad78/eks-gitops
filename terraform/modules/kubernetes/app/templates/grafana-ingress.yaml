@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana-ingress
+  namespace: monitoring
+  annotations:
+    # <1>
+    kubernetes.io/spec.ingressClassName: traefik #using traefik contoller
+    external-dns-alpha.kubernetes.io/target: grafana.jawwad.org
+
+spec:
+  rules:               
+  - host: grafana.jawwad.org
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+             name: prometheus-grafana 
+             
+             port:
+               number: {{ .Values.port.port }}             
+
+  tls:
+  - hosts:
+    - grafana.jawwad.org  
+    secretName:  cert-letsencrypt-secret  

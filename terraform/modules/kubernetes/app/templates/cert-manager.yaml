@@ -8,6 +8,8 @@ spec:
   secretName: cert-letsencrypt-secret # where your certificate will be stored once retrieved from let's encrypt
   dnsNames:
     - app.jawwad.org
+    - grafana.jawwad.org
+
   issuerRef:
     name: letsencrypt-staging
     kind: ClusterIssuer

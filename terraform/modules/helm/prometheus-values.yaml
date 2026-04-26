@@ -1,0 +1,42 @@
+prometheus:
+  prometheusSpec:    
+    storageSpec: 
+     volumeClaimTemplate: #creating the pvc
+       spec:
+         storageClassName: gp2
+         accessModes: ["ReadWriteOnce"]
+         resources:
+           requests:
+             storage: 10Gi # you can adjust to your needs , but keep in mind per gb costs $0.10 per month 
+                           # of what YOU provision, not what you use
+
+
+# I am making alert manager send me alerts to my email if anything goes wrong
+global:
+  resolve_timeout: 5m
+inhibit_rules: []
+receivers:
+- name: alertmanagernotifs
+  email_configs:
+  - to: jawwadahmad88@gmail.com
+    from: jawwadahmad88@gmail.com # will use this email to sign in and then send to above one (to)
+    auth_username: jawwadahmad88@gmail.com
+    auth_password: /etc/alertmanager/secrets/password
+    send_resolved: true
+    require_tls: true #sends email only when connection between alertmanager and gmail smtp server is secure
+    smarthost: smtp.gmail.com:587
+    
+ 
+
+# for alert manager
+alertmanager:
+  alertmanagerSpec:
+      secrets: [my-secret] #mounting my secret to configure alert manager listener for alerts in auth_password
+      storage: 
+        volumeClaimTemplate:
+          spec:
+            storageClassName: gp2
+            accessModes: ["ReadWriteOnce"]
+            resources:
+                requests:
+                  storage: 8Gi          

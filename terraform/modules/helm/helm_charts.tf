@@ -49,14 +49,28 @@ resource "helm_release" "app" {
 
 resource "helm_release" "external-dns" {
   name = "external-dns"
-
   repository       = "https://kubernetes-sigs.github.io/external-dns"
   chart            = "external-dns"
   
-
   values = [
     file("${path.module}/externaldns-values.yaml")
   ]
 
    depends_on = [var.node_group_name]
+}
+
+resource "helm_release" "prometheus" {
+  name = "prometheus"
+  repository       = "https://prometheus-community.github.io/helm-charts"
+  chart            = "kube-prometheus-stack"
+  namespace = "monitoring"
+  create_namespace = true
+  version = "v84.0.0"
+
+  values = [
+    file("${path.module}/prometheus-values.yaml")
+  ]
+
+
+   depends_on = [var.aws_eks_addon]
 }

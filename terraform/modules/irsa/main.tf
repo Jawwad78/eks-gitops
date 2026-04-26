@@ -138,3 +138,11 @@ resource "aws_iam_role" "prometheusirsa" {
     ]
   })
 }
+
+
+# The add on role needs an IAM policy for ec2 otherwise it will be in a pending state waiting
+# for pods to become active
+resource "aws_iam_role_policy_attachment" "test-attach" {
+  role       = aws_iam_role.prometheusirsa.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
+}
