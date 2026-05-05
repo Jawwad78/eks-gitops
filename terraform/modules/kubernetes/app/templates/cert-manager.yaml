@@ -9,6 +9,7 @@ spec:
   dnsNames:
     - app.jawwad.org
     - grafana.jawwad.org
+    - argocd.jawwad.org
 
   issuerRef:
     name: letsencrypt-staging

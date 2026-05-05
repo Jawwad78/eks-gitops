@@ -74,3 +74,15 @@ resource "helm_release" "prometheus" {
 
    depends_on = [var.aws_eks_addon]
 }
+
+resource "helm_release" "argocd" {
+  name = "argocd"
+  repository       = "https://argoproj.github.io/argo-helm"
+  chart            = "argo-cd"
+  namespace = "argocd"
+  create_namespace = true
+  version = "v7.7.0"
+
+
+   depends_on = [var.aws_eks_addon]
+}

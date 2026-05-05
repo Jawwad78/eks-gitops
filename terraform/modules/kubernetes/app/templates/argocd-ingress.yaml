@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-ingress
+  namespace: argocd
+  annotations:
+    # <1>
+    kubernetes.io/spec.ingressClassName: traefik #using traefik contoller
+    external-dns-alpha.kubernetes.io/target: argocd.jawwad.org
+
+spec:
+  rules:               
+  - host: argocd.jawwad.org
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+             name: argocd-server 
+             
+             port:
+               number: {{ .Values.port.port }}             
+
+  tls:
+  - hosts:
+    - argocd.jawwad.org  
+    secretName:  cert-letsencrypt-secret  
