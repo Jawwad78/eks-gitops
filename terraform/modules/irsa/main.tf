@@ -60,6 +60,8 @@ resource "aws_iam_role_policy_attachment" "irsa-attacth" {
   policy_arn = aws_iam_policy.policy_for_svcaccount.arn
 }
 
+
+
 resource "aws_iam_policy" "policy_for_external_dns" {
   name = "external_dns_policy"
 
@@ -102,7 +104,7 @@ resource "aws_iam_role" "external-dns" {
         },
         "Condition" : {
           "StringEquals" : {
-            "oidc.eks.eu-west-2.amazonaws.com/id/4197F45D6D65EC166B272BDC4FF9B6F5:sub" : "system:serviceaccount:default:external-dns"
+            "oidc.eks.eu-west-2.amazonaws.com/id/4197F45D6D65EC166B272BDC4FF9B6F5:sub" : "system:serviceaccount:external-dns:external-dns"
           }
         }
       }

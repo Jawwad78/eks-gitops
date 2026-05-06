@@ -1,8 +1,23 @@
 serviceAccount:
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::726661503364:role/external-dns
+
 provider:
   name: aws
 env:
   - name: AWS_DEFAULT_REGION
     value: eu-west-2   
+
+domainFilters:
+  - jawwad.org   # Only manage records for this domain
+
+policy: sync  # sync will create and delete records; upsert-only won't delete
+
+txtOwnerId: my-cluster  # Unique identifier to prevent conflicts with other clusters
+
+sources:
+  - ingress
+  - service
+
+extraArgs:
+  - --aws-zone-type=public  # Only manage public hosted zones

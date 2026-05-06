@@ -1,6 +1,5 @@
 resource "helm_release" "cert-manager" {
   name = "cert-manager"
-
   repository       = "https://charts.jetstack.io"
   chart            = "cert-manager"
   namespace        = "cert-manager"
@@ -26,11 +25,11 @@ resource "helm_release" "cert-manager" {
 
 resource "helm_release" "traefik" {
   name = "traefik"
-
   repository       = "https://traefik.github.io/charts"
   chart            = "traefik"
   namespace        = "traefik"
   create_namespace = true
+  version = "39.0.9"
 
 
   values = [
@@ -51,6 +50,9 @@ resource "helm_release" "external-dns" {
   name = "external-dns"
   repository       = "https://kubernetes-sigs.github.io/external-dns"
   chart            = "external-dns"
+  namespace        = "external-dns"
+  create_namespace = true
+  version          = "v1.19.0"
   
   values = [
     file("${path.module}/externaldns-values.yaml")
@@ -84,5 +86,5 @@ resource "helm_release" "argocd" {
   version = "v7.7.0"
 
 
-   depends_on = [var.aws_eks_addon]
+   depends_on = [helm_release.app]
 }
