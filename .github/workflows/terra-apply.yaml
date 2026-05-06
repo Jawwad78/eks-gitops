@@ -1,0 +1,69 @@
+name: terraform plan-apply
+on:
+  workflow_dispatch:
+
+env:
+  AWS_REGION: eu-west-2
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+
+permissions:
+  id-token: write #  it allows github to make the oidc token
+  contents: read  #allows this pipeline to read files in this github repo  
+
+
+jobs: 
+ terraform-init-plan:
+   name: Terraform init and plan
+   runs-on: ubuntu-latest
+   defaults:
+    run:
+      working-directory: ./terraform  
+   
+   steps:
+     - name: checks out code
+       uses: actions/checkout@v4
+     - name: configure aws credentials
+       uses: aws-actions/configure-aws-credentials@v3
+       with : 
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/eksoidc 
+          aws-region: ${{ env.AWS_REGION }}
+
+
+     - name: Hashicorp - Terraform setup
+       uses: hashicorp/setup-terraform@v3.1.2      
+
+
+     - name: setup tflint
+       uses: terraform-linters/setup-tflint@v4
+        
+     - name: terraform format check
+       run: terraform fmt -check
+  
+     - name: Terraform Init
+       run: terraform init
+    
+     - name: terraform validate
+       run: terraform validate
+    
+     - name: use tfavrs from secrets
+       run: |
+         cat <<'STOP' > terraform.tfvars
+         ${{ secrets.TFVARS_SECRET }}
+         STOP
+      
+     - name: Test with Checkov
+       id: checkov
+       uses: bridgecrewio/checkov-action@master
+       with:
+          directory: ./terraform
+          framework: terraform     
+          output_format: github_failed_only
+          soft_fail: true 
+
+        
+     - name: Terraform Plan
+       run: terraform plan
+
+     - name: Terraform apply auto approve
+       run: terraform apply -auto-approve  
+      
