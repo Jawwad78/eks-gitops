@@ -1,4 +1,4 @@
-name: build image and codedeploy
+name: build image 
 on:
   push:
     branches: ['main']
