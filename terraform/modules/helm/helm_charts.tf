@@ -19,7 +19,7 @@ resource "helm_release" "cert-manager" {
     file("${path.module}/certmanager-values.yaml")
   ]
 
-  depends_on = [ var.node_group_name ]
+  depends_on = [ var.aws_eks_addon]
 }
 
 
@@ -35,7 +35,7 @@ resource "helm_release" "traefik" {
     file("${path.module}/traefik-values.yaml")
   ]
 
-  depends_on = [ var.node_group_name ]
+  depends_on = [ var.aws_eks_addon]
 }
 
 
@@ -58,7 +58,7 @@ resource "helm_release" "external-dns" {
     file("${path.module}/externaldns-values.yaml")
   ]
 
-  depends_on = [ var.node_group_name ]
+  depends_on = [ var.aws_eks_addon]
 }
 
 resource "helm_release" "prometheus" {
@@ -73,7 +73,7 @@ resource "helm_release" "prometheus" {
     file("${path.module}/prometheus-values.yaml")
   ]
 
-  depends_on = [ var.node_group_name ]
+  depends_on = [ var.aws_eks_addon]
 }
 
 
@@ -85,5 +85,5 @@ resource "helm_release" "argocd" {
   create_namespace = true
   version          = "v7.7.0"
  
-  depends_on = [ var.node_group_name ]
+  depends_on = [ var.aws_eks_addon]
 }
