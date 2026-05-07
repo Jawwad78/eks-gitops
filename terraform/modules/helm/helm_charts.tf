@@ -6,7 +6,6 @@ resource "helm_release" "cert-manager" {
   create_namespace = true
   version          = "v1.20.2"
 
-
   set = [
     {
       name  = "installCRDs"
@@ -22,6 +21,7 @@ resource "helm_release" "cert-manager" {
 
   depends_on = [var.node_group_name]
 }
+
 
 resource "helm_release" "traefik" {
   name             = "traefik"
@@ -39,9 +39,18 @@ resource "helm_release" "traefik" {
   depends_on = [var.node_group_name]
 }
 
+
 resource "helm_release" "app" {
   name  = "deploy"
   chart = "./modules/kubernetes/app"
+
+  set = [
+    {
+      name  = "installCRDs"
+      value = "true"
+    },
+
+  ]
 
   depends_on = [var.node_group_name]
 }
@@ -73,9 +82,9 @@ resource "helm_release" "prometheus" {
     file("${path.module}/prometheus-values.yaml")
   ]
 
-
   depends_on = [var.aws_eks_addon]
 }
+
 
 resource "helm_release" "argocd" {
   name             = "argocd"
@@ -85,6 +94,5 @@ resource "helm_release" "argocd" {
   create_namespace = true
   version          = "v7.7.0"
 
-
-  depends_on = [helm_release.app]
+  depends_on = [ helm_release.app ]
 }
