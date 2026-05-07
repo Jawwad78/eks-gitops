@@ -30,14 +30,12 @@ provider "aws" {
 provider "kubernetes" {
   host                   = module.eks.aws_eks_cluster_endpoint
   cluster_ca_certificate = base64decode(module.eks.aws_eks_cluster_certificate_authority)
-  token                  = module.eks.aws_eks_cluster_token
 }
 
 provider "kubectl" {
   host                   = module.eks.aws_eks_cluster_endpoint
   cluster_ca_certificate = base64decode(module.eks.aws_eks_cluster_certificate_authority)
   load_config_file       = false
-  token                  = module.eks.aws_eks_cluster_token
 }
 
 provider "helm" {
