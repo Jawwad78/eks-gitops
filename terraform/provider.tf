@@ -26,7 +26,7 @@ variable "aws_eks_cluster_endpoint" {
 
 variable "aws_eks_cluster_certificate_authority" {
   type = string
-  
+
 }
 
 provider "helm" {
