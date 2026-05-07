@@ -73,7 +73,6 @@ resource "helm_release" "prometheus" {
     file("${path.module}/prometheus-values.yaml")
   ]
 
-  depends_on = [ var.aws_eks_addon]
 }
 
 
