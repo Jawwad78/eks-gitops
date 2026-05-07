@@ -25,3 +25,7 @@ output "oidc_cluster_arn" {
 output "oidc_cluster_url" {
   value = aws_iam_openid_connect_provider.cluster.url
 }
+
+output "aws_eks_cluster_token" {
+  value = aws_eks_cluster.example.token
+}
