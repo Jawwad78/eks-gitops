@@ -20,13 +20,22 @@ provider "aws" {
 
 
 
+variable "aws_eks_cluster_endpoint" {
+  type = string
+}
+
+variable "aws_eks_cluster_certificate_authority" {
+  type = string
+  
+}
+
 provider "helm" {
   kubernetes = {
-    host                   = module.eks.aws_eks_cluster_endpoint
-    cluster_ca_certificate = base64decode(module.eks.aws_eks_cluster_certificate_authority)
+    host                   = var.aws_eks_cluster.endpoint
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.example.certificate_authority.0.data)
     exec = {
       api_version = "client.authentication.k8s.io/v1beta1"
-      args        = ["eks", "get-token", "--cluster-name", module.eks.aws_eks_cluster_name]
+      args        = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster.example.name]
       command     = "aws"
     }
   }
