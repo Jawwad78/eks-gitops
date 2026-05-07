@@ -135,6 +135,6 @@ resource "aws_eks_addon" "ebs_csi_driver" {
   resolve_conflicts_on_create = "OVERWRITE"
   service_account_role_arn    = var.prometheusirsa
 
-  depends_on = [aws_eks_cluster.example]
+  depends_on = [aws_eks_node_group.example]
 
 }

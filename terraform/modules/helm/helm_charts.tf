@@ -19,7 +19,7 @@ resource "helm_release" "cert-manager" {
     file("${path.module}/certmanager-values.yaml")
   ]
 
-  depends_on = [ helm_release.app ]
+  depends_on = [ var.node_group_name ]
 }
 
 
@@ -30,12 +30,12 @@ resource "helm_release" "traefik" {
   namespace        = "traefik"
   create_namespace = true
   version          = "39.0.9"
-  
+
   values = [
     file("${path.module}/traefik-values.yaml")
   ]
 
-  depends_on = [ helm_release.app ]
+  depends_on = [ var.node_group_name ]
 }
 
 
@@ -57,6 +57,8 @@ resource "helm_release" "external-dns" {
   values = [
     file("${path.module}/externaldns-values.yaml")
   ]
+
+  depends_on = [ var.node_group_name ]
 }
 
 resource "helm_release" "prometheus" {
@@ -70,6 +72,8 @@ resource "helm_release" "prometheus" {
   values = [
     file("${path.module}/prometheus-values.yaml")
   ]
+
+  depends_on = [ var.node_group_name ]
 }
 
 
@@ -81,4 +85,5 @@ resource "helm_release" "argocd" {
   create_namespace = true
   version          = "v7.7.0"
  
+  depends_on = [ var.node_group_name ]
 }
