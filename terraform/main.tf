@@ -29,12 +29,14 @@ module "kubernetes" {
 }
 
 module "irsa" {
-  source = "./modules/irsa"
+  source           = "./modules/irsa"
+  oidc_cluster_arn = module.eks.oidc_cluster_arn
+  oidc_cluster_url = module.eks.oidc_cluster_url
 }
 
 module "helm" {
   source          = "./modules/helm"
   node_group_name = module.eks.node_group_name
-  aws_eks_addon   = module.eks.aws_eks_addon
+  # aws_eks_addon   = module.eks.aws_eks_addon
 
 }

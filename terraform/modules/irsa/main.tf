@@ -43,11 +43,11 @@ resource "aws_iam_role" "irsa" {
         "Effect" : "Allow",
         "Action" : "sts:AssumeRoleWithWebIdentity",
         "Principal" : {
-          "Federated" : "arn:aws:iam::726661503364:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/4197F45D6D65EC166B272BDC4FF9B6F5"
+          "Federated" : "${var.oidc_cluster_arn}"
         },
         "Condition" : {
           "StringEquals" : {
-            "oidc.eks.eu-west-2.amazonaws.com/id/4197F45D6D65EC166B272BDC4FF9B6F5:sub" : "system:serviceaccount:cert-manager:cert-manager"
+            "${var.oidc_cluster_url}:sub" : "system:serviceaccount:cert-manager:cert-manager"
           }
         }
       }
@@ -100,11 +100,11 @@ resource "aws_iam_role" "external-dns" {
         "Effect" : "Allow",
         "Action" : "sts:AssumeRoleWithWebIdentity",
         "Principal" : {
-          "Federated" : "arn:aws:iam::726661503364:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/4197F45D6D65EC166B272BDC4FF9B6F5"
+          "Federated" : "${var.oidc_cluster_arn}"
         },
         "Condition" : {
           "StringEquals" : {
-            "oidc.eks.eu-west-2.amazonaws.com/id/4197F45D6D65EC166B272BDC4FF9B6F5:sub" : "system:serviceaccount:external-dns:external-dns"
+            "${var.oidc_cluster_url}:sub" : "system:serviceaccount:external-dns:external-dns"
           }
         }
       }
@@ -128,12 +128,12 @@ resource "aws_iam_role" "prometheusirsa" {
         "Effect" : "Allow",
         "Action" : "sts:AssumeRoleWithWebIdentity",
         "Principal" : {
-          "Federated" : "arn:aws:iam::726661503364:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/4197F45D6D65EC166B272BDC4FF9B6F5"
+          "Federated" : "${var.oidc_cluster_arn}"
         },
         "Condition" : {
           "StringEquals" : {
-            "oidc.eks.eu-west-2.amazonaws.com/id/4197F45D6D65EC166B272BDC4FF9B6F5:aud" : "sts.amazonaws.com",
-            "oidc.eks.eu-west-2.amazonaws.com/id/4197F45D6D65EC166B272BDC4FF9B6F5:sub" : "system:serviceaccount:kube-system:ebs-csi-controller-sa"
+            "${var.oidc_cluster_url}:aud" : "sts.amazonaws.com",
+            "${var.oidc_cluster_url}:sub" : "system:serviceaccount:kube-system:ebs-csi-controller-sa"
           }
         }
       }
