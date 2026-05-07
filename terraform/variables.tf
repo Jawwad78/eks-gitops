@@ -38,3 +38,7 @@ variable "authentication_mode" {
   type = string
 }
 
+
+variable "oidc_principle_arn" {
+  type = string
+}

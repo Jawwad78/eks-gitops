@@ -15,6 +15,10 @@ variable "principal_arn" {
   type = string
 }
 
+variable "oidc_principle_arn" {
+  type = string
+}
+
 variable "desired_size" {
   type = number
 }

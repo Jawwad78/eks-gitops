@@ -108,6 +108,25 @@ resource "aws_iam_openid_connect_provider" "cluster" {
   ]
 }
 
+# adding acees entry for my oidc with github to connect to cluster
+resource "aws_eks_access_entry" "oidceks_entry" {
+  cluster_name      = aws_eks_cluster.example.name
+  principal_arn     = var.oidc_principle_arn
+  kubernetes_groups = ["group-2"]
+  type              = "STANDARD"
+}
+
+resource "aws_eks_access_policy_association" "oidc_access_entry_policy" {
+  cluster_name  = aws_eks_cluster.example.name
+  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+  principal_arn = var.oidc_principle_arn
+
+  access_scope {
+    type = "cluster"
+  }
+}
+
+
 # Creating add on ebs storage for prometheus
 resource "aws_eks_addon" "ebs_csi_driver" {
   cluster_name                = aws_eks_cluster.example.name

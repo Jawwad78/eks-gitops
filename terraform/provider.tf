@@ -9,15 +9,6 @@ terraform {
       source  = "hashicorp/helm"
       version = "3.1.1"
     }
-
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "3.1.0"
-    }
-    kubectl = {
-      source  = "gavinbunney/kubectl"
-      version = "1.19.0"
-    }
   }
 }
 
@@ -27,16 +18,7 @@ provider "aws" {
   region = var.region
 }
 
-provider "kubernetes" {
-  host                   = module.eks.aws_eks_cluster_endpoint
-  cluster_ca_certificate = base64decode(module.eks.aws_eks_cluster_certificate_authority)
-}
 
-provider "kubectl" {
-  host                   = module.eks.aws_eks_cluster_endpoint
-  cluster_ca_certificate = base64decode(module.eks.aws_eks_cluster_certificate_authority)
-  load_config_file       = false
-}
 
 provider "helm" {
   kubernetes = {

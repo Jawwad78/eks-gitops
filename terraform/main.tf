@@ -17,7 +17,7 @@ module "eks" {
   max_unavailable            = var.max_unavailable
   authentication_mode        = var.authentication_mode
   prometheusirsa             = module.irsa.prometheusirsa
-
+  oidc_principle_arn         = var.oidc_principle_arn
 }
 
 module "iam" {
