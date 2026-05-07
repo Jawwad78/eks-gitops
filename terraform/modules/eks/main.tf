@@ -102,12 +102,12 @@ resource "aws_eks_node_group" "example" {
 
 # Creating add on ebs storage for prometheus
 resource "aws_eks_addon" "ebs_csi_driver" {
-  cluster_name             = aws_eks_cluster.example.name
-  addon_name               = "aws-ebs-csi-driver"
-  addon_version            = "v1.58.0-eksbuild.1"
+  cluster_name                = aws_eks_cluster.example.name
+  addon_name                  = "aws-ebs-csi-driver"
+  addon_version               = "v1.58.0-eksbuild.1"
   resolve_conflicts_on_create = "OVERWRITE"
-  service_account_role_arn = var.prometheusirsa
-  
-  depends_on = [ aws_eks_cluster.example]
-  
+  service_account_role_arn    = var.prometheusirsa
+
+  depends_on = [aws_eks_cluster.example]
+
 }

@@ -16,7 +16,7 @@ module "eks" {
   max_size                   = var.max_size
   max_unavailable            = var.max_unavailable
   authentication_mode        = var.authentication_mode
-  prometheusirsa = module.irsa.prometheusirsa
+  prometheusirsa             = module.irsa.prometheusirsa
 
 }
 
@@ -35,6 +35,6 @@ module "irsa" {
 module "helm" {
   source          = "./modules/helm"
   node_group_name = module.eks.node_group_name
-  aws_eks_addon = module.eks.aws_eks_addon
+  aws_eks_addon   = module.eks.aws_eks_addon
 
 }
