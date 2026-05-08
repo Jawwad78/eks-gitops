@@ -1,4 +1,4 @@
-# EKS Cloud Native DevOps Project
+# EKS GitOps Cloud Native DevOps Project
 
 ## Project Overview
 
@@ -57,8 +57,6 @@ Alertmanager is configured with email alerts to improve awareness when issues oc
 Prometheus data is stored persistently using EBS volumes through the gp2 StorageClass.
 
 ## Demonstration
-
-EKS Cluster
 
 Argo CD
 
