@@ -1,6 +1,10 @@
 resource "aws_ecr_repository" "ecr_repo" {
   name                 = "eks"
   image_tag_mutability = "MUTABLE"
+  
+    tags = {
+      name = "eks_ecr"
+    }
 }
 
 resource "aws_ecr_lifecycle_policy" "ecr_lifecycle" {
