@@ -41,7 +41,11 @@ resource "helm_release" "traefik" {
 
 resource "helm_release" "app" {
   name  = "deploy"
-  chart = "./modules/kubernetes/app"
+  chart = "./kubernetes/app"
+
+  values = [
+    file("${path.module}/../../kubernetes/app/values.yaml")
+  ]
 
   depends_on = [helm_release.argocd]
 }

@@ -25,7 +25,7 @@ module "iam" {
 }
 
 module "kubernetes" {
-  source = "./modules/kubernetes"
+  source = "./kubernetes"
 }
 
 module "irsa" {
