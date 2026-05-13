@@ -38,17 +38,6 @@ resource "helm_release" "traefik" {
 }
 
 
-# resource "helm_release" "manifests" {
-#   name  = "deploy"
-#   chart = "./kubernetes/manifests"
-
-#   values = [
-#     file("${path.module}/../../kubernetes/manifests/values.yaml")
-#   ]
-
-#   depends_on = [helm_release.argocd]
-# }
-
 resource "helm_release" "external-dns" {
   name             = "external-dns"
   repository       = "https://kubernetes-sigs.github.io/external-dns"
