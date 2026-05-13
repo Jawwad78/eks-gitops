@@ -10,4 +10,4 @@ port:
   targetPort: 80
 
 container:
-  image: "726661503364.dkr.ecr.eu-west-2.amazonaws.com/eks:4273c4c4f5346442353b89ea6d3b04589b2b1f0d" #change this to your image in ecr
+  image: "726661503364.dkr.ecr.eu-west-2.amazonaws.com/eks:ca15274a5ca9ae58bdad5c856ac32ca3b569f26c" #change this to your image in ecr
