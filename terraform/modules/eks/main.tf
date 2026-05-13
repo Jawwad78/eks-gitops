@@ -96,9 +96,7 @@ resource "aws_eks_node_group" "nodes" {
   update_config {
     max_unavailable = var.max_unavailable
   }
-
-  # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
-  # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
+  
   depends_on = [var.aws_iam_role_node]
 
 }
