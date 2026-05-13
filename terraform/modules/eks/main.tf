@@ -1,4 +1,4 @@
-resource "aws_eks_cluster" "example" {
+resource "aws_eks_cluster" "eks_cluster" {
   name = "eks-cluster"
 
   access_config {
@@ -19,6 +19,10 @@ resource "aws_eks_cluster" "example" {
   depends_on = [
     aws_iam_role_policy_attachment.cluster_AmazonEKSClusterPolicy,
   ]
+  
+    tags = {
+      name = "EKS_cluster"
+    }
 }
 
 resource "aws_iam_role" "cluster" {
@@ -47,15 +51,15 @@ resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSClusterPolicy" {
 
 #create access entry so I can acces the cluster from laptop
 resource "aws_eks_access_entry" "example" {
-  cluster_name      = aws_eks_cluster.example.name
+  cluster_name      = aws_eks_cluster.eks_cluster.name
   principal_arn     = var.principal_arn
   kubernetes_groups = ["group-1"]
   type              = "STANDARD"
 }
 
 #add view policy to access entry to view pods,svs etc
-resource "aws_eks_access_policy_association" "example" {
-  cluster_name  = aws_eks_cluster.example.name
+resource "aws_eks_access_policy_association" "admin_policy" {
+  cluster_name  = aws_eks_cluster.eks_cluster.name
   policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
   principal_arn = var.principal_arn
 
@@ -64,8 +68,8 @@ resource "aws_eks_access_policy_association" "example" {
   }
 }
 
-resource "aws_eks_access_policy_association" "example2" {
-  cluster_name  = aws_eks_cluster.example.name
+resource "aws_eks_access_policy_association" "cluster_admin_policy" {
+  cluster_name  = aws_eks_cluster.eks_cluster.name
   policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
   principal_arn = var.principal_arn
 
@@ -76,8 +80,8 @@ resource "aws_eks_access_policy_association" "example2" {
 
 
 #create nodes
-resource "aws_eks_node_group" "example" {
-  cluster_name    = aws_eks_cluster.example.name
+resource "aws_eks_node_group" "nodes" {
+  cluster_name    = aws_eks_cluster.eks_cluster.name
   node_group_name = "example"
   node_role_arn   = var.aws_iam_role_node
   subnet_ids      = var.aws_subnet_private
@@ -101,7 +105,7 @@ resource "aws_eks_node_group" "example" {
 
 
 resource "aws_iam_openid_connect_provider" "cluster" {
-  url = aws_eks_cluster.example.identity.0.oidc.0.issuer
+  url = aws_eks_cluster.eks_cluster.identity.0.oidc.0.issuer
 
   client_id_list = [
     "sts.amazonaws.com",
@@ -110,14 +114,14 @@ resource "aws_iam_openid_connect_provider" "cluster" {
 
 # adding acees entry for my oidc with github to connect to cluster
 resource "aws_eks_access_entry" "oidceks_entry" {
-  cluster_name      = aws_eks_cluster.example.name
+  cluster_name      = aws_eks_cluster.eks_cluster.name
   principal_arn     = var.oidc_principle_arn
   kubernetes_groups = ["group-2"]
   type              = "STANDARD"
 }
 
 resource "aws_eks_access_policy_association" "oidc_access_entry_policy" {
-  cluster_name  = aws_eks_cluster.example.name
+  cluster_name  = aws_eks_cluster.eks_cluster.name
   policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
   principal_arn = var.oidc_principle_arn
 
@@ -129,12 +133,12 @@ resource "aws_eks_access_policy_association" "oidc_access_entry_policy" {
 
 # Creating add on ebs storage for prometheus
 resource "aws_eks_addon" "ebs_csi_driver" {
-  cluster_name                = aws_eks_cluster.example.name
+  cluster_name                = aws_eks_cluster.eks_cluster.name
   addon_name                  = "aws-ebs-csi-driver"
   addon_version               = "v1.58.0-eksbuild.1"
   resolve_conflicts_on_create = "OVERWRITE"
   service_account_role_arn    = var.prometheusirsa
 
-  depends_on = [aws_eks_node_group.example]
+  depends_on = [aws_eks_node_group.nodes]
 
 }

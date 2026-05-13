@@ -60,8 +60,6 @@ resource "aws_iam_role_policy_attachment" "irsa-attacth" {
   policy_arn = aws_iam_policy.policy_for_svcaccount.arn
 }
 
-
-
 resource "aws_iam_policy" "policy_for_external_dns" {
   name = "external_dns_policy"
 

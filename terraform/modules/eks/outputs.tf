@@ -1,5 +1,5 @@
 output "node_group_name" {
-  value = aws_eks_node_group.example.arn
+  value = aws_eks_node_group.nodes.arn
 }
 
 output "aws_eks_addon" {
@@ -7,15 +7,15 @@ output "aws_eks_addon" {
 }
 
 output "aws_eks_cluster_endpoint" {
-  value = aws_eks_cluster.example.endpoint
+  value = aws_eks_cluster.eks_cluster.endpoint
 }
 
 output "aws_eks_cluster_certificate_authority" {
-  value = aws_eks_cluster.example.certificate_authority.0.data
+  value = aws_eks_cluster.eks_cluster.certificate_authority.0.data
 }
 
 output "aws_eks_cluster_name" {
-  value = aws_eks_cluster.example.name
+  value = aws_eks_cluster.eks_cluster.name
 }
 
 output "oidc_cluster_arn" {

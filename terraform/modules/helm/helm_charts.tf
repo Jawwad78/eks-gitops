@@ -11,7 +11,6 @@ resource "helm_release" "cert-manager" {
       name  = "installCRDs"
       value = "true"
     },
-
   ]
 
   #insert my values file
@@ -39,16 +38,16 @@ resource "helm_release" "traefik" {
 }
 
 
-resource "helm_release" "app" {
-  name  = "deploy"
-  chart = "./kubernetes/app"
+# resource "helm_release" "manifests" {
+#   name  = "deploy"
+#   chart = "./kubernetes/manifests"
 
-  values = [
-    file("${path.module}/../../kubernetes/app/values.yaml")
-  ]
+#   values = [
+#     file("${path.module}/../../kubernetes/manifests/values.yaml")
+#   ]
 
-  depends_on = [helm_release.argocd]
-}
+#   depends_on = [helm_release.argocd]
+# }
 
 resource "helm_release" "external-dns" {
   name             = "external-dns"
@@ -78,7 +77,6 @@ resource "helm_release" "prometheus" {
   ]
 
 }
-
 
 resource "helm_release" "argocd" {
   name             = "argocd"
