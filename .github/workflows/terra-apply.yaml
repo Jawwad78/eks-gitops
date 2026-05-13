@@ -67,5 +67,5 @@ jobs:
        run:  aws eks update-kubeconfig --region eu-west-2  --name eks-cluster
        
      - name: apply argocd manifest 
-       run: kubectl apply -f terraform/kubernetes/manifests/templates/argocd.yaml
+       run: kubectl apply -f kubernetes/manifests/templates/argocd.yaml
       
