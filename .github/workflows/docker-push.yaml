@@ -44,9 +44,9 @@ jobs:
           severity: 'CRITICAL,HIGH'
           ignore-unfixed: true #if there are no updated patches of the version, it will ignore it 
         
-        
       - name: login to ecr
         uses: aws-actions/amazon-ecr-login@v2  
+        
       - name: push image
         id: push-image    
         run:

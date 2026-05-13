@@ -45,7 +45,6 @@ jobs:
          cat <<'STOP' > terraform.tfvars
          ${{ secrets.TFVARS_SECRET }}
          STOP
-        
-        
+                
      - name: Terraform destroy
        run: terraform destroy -auto-approve

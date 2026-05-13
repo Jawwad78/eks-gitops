@@ -10,7 +10,6 @@ permissions:
   id-token: write #  it allows github to make the oidc token
   contents: read  #allows this pipeline to read files in this github repo  
 
-
 jobs: 
  terraform-init-plan:
    name: Terraform init and plan
@@ -28,10 +27,8 @@ jobs:
           role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/eksoidc 
           aws-region: ${{ env.AWS_REGION }}
 
-
      - name: Hashicorp - Terraform setup
        uses: hashicorp/setup-terraform@v3.1.2      
-
 
      - name: setup tflint
        uses: terraform-linters/setup-tflint@v4
@@ -60,10 +57,15 @@ jobs:
           output_format: github_failed_only
           soft_fail: true 
 
-        
      - name: Terraform Plan
        run: terraform plan
 
      - name: Terraform apply auto approve
        run: terraform apply -auto-approve  
+
+     - name: set up kubectl to cluster
+       run:  aws eks update-kubeconfig --region eu-west-2  --name eks-cluster
+       
+     - name: apply argocd manifest 
+       run: kubectl apply -f terraform/kubernetes/manifests/templates/argocd.yaml
       
