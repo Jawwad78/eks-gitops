@@ -64,7 +64,7 @@ Argo CD
 
 Application UI
 
-<img width="1918" height="1022" alt="Image" src="https://github.com/user-attachments/assets/b0284433-030c-4c7c-9eba-d0cfcd0d75dc" />
+<img width="1917" height="1026" alt="Image" src="https://github.com/user-attachments/assets/4d0a0101-5189-4eb3-b49c-645cf6510d43" />
 
 Grafana Dashboards
 
